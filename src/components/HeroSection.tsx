@@ -13,7 +13,9 @@ const COLOR_OPTIONS = [
   { id: "nude", label: "Natürliches Nude", hex: "#E8C9A8", image: colorNude },
   { id: "mokka", label: "Mokka", hex: "#6B3A2E", image: colorMokka },
   { id: "kristallweiss", label: "Kristallweiß", hex: "#F5F0E8", image: colorKristallweiss },
-] as const;
+];
+
+type ColorOption = (typeof COLOR_OPTIONS)[number];
 
 const SIZES = ["S", "M", "L", "XL", "XXL", "XXXL"] as const;
 
