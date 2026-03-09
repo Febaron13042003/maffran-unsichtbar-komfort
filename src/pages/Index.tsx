@@ -1,36 +1,26 @@
-import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import FeatureGrid from "@/components/FeatureGrid";
+import WhyMaffran from "@/components/WhyMaffran";
 import TransformationSection from "@/components/TransformationSection";
-import BundleSection from "@/components/BundleSection";
-import SizeChart from "@/components/SizeChart";
+import SocialProof from "@/components/SocialProof";
 import TrustSection from "@/components/TrustSection";
-import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
+      <HeroSection />
       <ScrollReveal>
-        <HeroSection />
-      </ScrollReveal>
-      <ScrollReveal>
-        <FeatureGrid />
+        <WhyMaffran />
       </ScrollReveal>
       <ScrollReveal>
         <TransformationSection />
       </ScrollReveal>
       <ScrollReveal>
-        <BundleSection />
-      </ScrollReveal>
-      <ScrollReveal>
-        <SizeChart />
+        <SocialProof />
       </ScrollReveal>
       <ScrollReveal>
         <TrustSection />
       </ScrollReveal>
-      <Footer />
     </div>
   );
 };

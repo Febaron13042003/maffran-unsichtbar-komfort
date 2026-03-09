@@ -3,8 +3,18 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
-import NotFound from "./pages/NotFound.tsx";
+import { CartProvider } from "@/contexts/CartContext";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import CartDrawer from "@/components/CartDrawer";
+import Index from "./pages/Index";
+import Produkt from "./pages/Produkt";
+import Angebote from "./pages/Angebote";
+import Impressum from "./pages/Impressum";
+import Datenschutz from "./pages/Datenschutz";
+import Widerruf from "./pages/Widerruf";
+import Versand from "./pages/Versand";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -14,11 +24,21 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <CartProvider>
+          <Navbar />
+          <CartDrawer />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/produkt" element={<Produkt />} />
+            <Route path="/angebote" element={<Angebote />} />
+            <Route path="/impressum" element={<Impressum />} />
+            <Route path="/datenschutz" element={<Datenschutz />} />
+            <Route path="/widerruf" element={<Widerruf />} />
+            <Route path="/versand" element={<Versand />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </CartProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
