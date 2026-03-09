@@ -20,7 +20,7 @@ type ColorOption = (typeof COLOR_OPTIONS)[number];
 const SIZES = ["S", "M", "L", "XL", "XXL", "XXXL"] as const;
 
 const HeroSection = () => {
-  const [selectedColor, setSelectedColor] = useState(COLOR_OPTIONS[0]);
+  const [selectedColor, setSelectedColor] = useState<ColorOption>(COLOR_OPTIONS[0]);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   return (
