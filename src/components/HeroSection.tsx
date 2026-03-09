@@ -1,109 +1,76 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
-import colorSchwarz from "@/assets/color-schwarz.png";
-import colorSandbeige from "@/assets/color-sandbeige.png";
-import colorNude from "@/assets/color-nude.png";
-import colorMokka from "@/assets/color-mokka.png";
-import colorKristallweiss from "@/assets/color-kristallweiss.png";
-
-const COLOR_OPTIONS = [
-  { id: "schwarz", label: "Schwarz", hex: "#1A1A1A", image: colorSchwarz },
-  { id: "sandbeige", label: "Sandbeige", hex: "#D4B896", image: colorSandbeige },
-  { id: "nude", label: "Natürliches Nude", hex: "#E8C9A8", image: colorNude },
-  { id: "mokka", label: "Mokka", hex: "#6B3A2E", image: colorMokka },
-  { id: "kristallweiss", label: "Kristallweiß", hex: "#F5F0E8", image: colorKristallweiss },
-];
-
-type ColorOption = (typeof COLOR_OPTIONS)[number];
-
-const SIZES = ["S", "M", "L", "XL", "XXL", "XXXL"] as const;
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { ArrowRight, Star } from "lucide-react";
+import heroProduct from "@/assets/hero-product.jpg";
 
 const HeroSection = () => {
-  const [selectedColor, setSelectedColor] = useState<ColorOption>(COLOR_OPTIONS[0]);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
-
   return (
-    <section className="border-b border-border">
-      <div className="container grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-80px)]">
-        {/* Left - Copy & Selectors */}
-        <div className="flex flex-col justify-center py-16 lg:py-24 lg:pr-16 border-b lg:border-b-0 lg:border-r border-border">
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-light leading-[1.1] tracking-tight-display text-foreground mb-6">
-            Die unsichtbare Revolution für jede Kurve
-          </h1>
-          <p className="font-body text-base md:text-lg font-light text-muted-foreground leading-relaxed mb-10 max-w-md">
-            Nahtlos. Unsichtbar. Ganztägiger Komfort. Engineered mit Laser-Cut-Technologie für null sichtbare Linien unter engster Kleidung — in den Größen S bis XXXL.
-          </p>
-
-          {/* Color Selector */}
-          <div className="mb-8">
-            <p className="font-display text-xs uppercase tracking-editorial text-muted-foreground mb-3">
-              Farbauswahl — <span className="text-foreground">{selectedColor.label}</span>
-            </p>
-            <div className="flex gap-3">
-              {COLOR_OPTIONS.map((color) => (
-                <button
-                  key={color.id}
-                  onClick={() => setSelectedColor(color)}
-                  aria-label={color.label}
-                  className={`w-10 h-10 rounded-full border-2 transition-all duration-200 ${
-                    selectedColor.id === color.id
-                      ? "border-foreground scale-110 shadow-md"
-                      : "border-border hover:border-muted-foreground"
-                  }`}
-                  style={{ backgroundColor: color.hex }}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Size Selector */}
-          <div className="mb-8">
-            <p className="font-display text-xs uppercase tracking-editorial text-muted-foreground mb-3">
-              Größenauswahl
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {SIZES.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => setSelectedSize(size)}
-                  className={`font-display text-xs uppercase tracking-editorial min-w-[3rem] px-4 py-3 border transition-colors duration-200 ${
-                    selectedSize === size
-                      ? "border-foreground bg-foreground text-primary-foreground"
-                      : "border-border text-foreground hover:border-foreground"
-                  }`}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-            <p className="font-body text-xs text-muted-foreground mt-3 italic">
-              Optimiert für Kurven. Im Zweifel die größere Nummer wählen.
-            </p>
-          </div>
-
-          <a
-            href="#bundles"
-            className="font-display text-xs uppercase tracking-editorial border border-foreground px-8 py-4 text-foreground hover:bg-foreground hover:text-primary-foreground transition-colors self-start"
+    <section className="relative overflow-hidden">
+      <div className="container grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-64px)] gap-8">
+        {/* Left - Copy */}
+        <div className="flex flex-col justify-center py-12 lg:py-20 order-2 lg:order-1">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            In den Warenkorb
-          </a>
+            {/* Social Proof Badge */}
+            <div className="flex items-center gap-2 mb-6">
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={14} className="fill-foreground text-foreground" />
+                ))}
+              </div>
+              <span className="font-body text-xs text-muted-foreground">
+                4.9/5 · Über 12.000 zufriedene Kundinnen
+              </span>
+            </div>
+
+            <h1 className="font-display text-4xl md:text-5xl lg:text-[3.5rem] font-semibold leading-[1.1] tracking-tight-display text-foreground mb-5">
+              Die unsichtbare Revolution für jede Kurve
+            </h1>
+            <p className="font-body text-base md:text-lg font-light text-muted-foreground leading-relaxed mb-8 max-w-lg">
+              Nahtlos. Unsichtbar. Ganztägiger Komfort. Engineered mit Laser-Cut-Technologie
+              für null sichtbare Linien unter engster Kleidung — in den Größen S bis XXXL.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                to="/angebote"
+                className="inline-flex items-center justify-center gap-2 font-display text-sm font-medium bg-foreground text-primary-foreground px-7 py-3.5 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Jetzt Spar-Paket wählen
+                <ArrowRight size={16} />
+              </Link>
+              <Link
+                to="/produkt"
+                className="inline-flex items-center justify-center gap-2 font-display text-sm font-medium border border-border text-foreground px-7 py-3.5 rounded-lg hover:bg-muted transition-colors"
+              >
+                Produkt ansehen
+              </Link>
+            </div>
+
+            {/* Trust pills */}
+            <div className="flex flex-wrap gap-3 mt-8">
+              {["Kostenloser Versand", "30-Tage Rückgabe", "Sichere Bezahlung"].map((t) => (
+                <span key={t} className="font-body text-[11px] text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
         {/* Right - Image */}
-        <div className="flex items-center justify-center py-16 lg:py-24 lg:pl-16">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={selectedColor.id}
-              src={selectedColor.image}
-              alt={`Maffran Invisible Seamless Comfort Brief — ${selectedColor.label}`}
-              className="w-full max-w-md lg:max-w-lg object-contain"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </AnimatePresence>
+        <div className="flex items-center justify-center py-8 lg:py-16 order-1 lg:order-2">
+          <motion.img
+            src={heroProduct}
+            alt="Maffran Invisible Seamless Comfort Brief"
+            className="w-full max-w-sm lg:max-w-md object-contain rounded-2xl"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+          />
         </div>
       </div>
     </section>

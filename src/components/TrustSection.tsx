@@ -9,18 +9,16 @@ const badges = [
 
 const TrustSection = () => {
   return (
-    <section className="border-b border-border">
-      <div className="container py-12 lg:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
-          {badges.map((badge, i) => (
+    <section className="py-10 bg-muted/50">
+      <div className="container">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {badges.map((badge) => (
             <div
               key={badge.label}
-              className={`flex flex-col items-center justify-center py-8 px-4 ${
-                i < badges.length - 1 ? "border-b md:border-b-0 md:border-r border-border" : ""
-              } ${i < 2 ? "border-b md:border-b-0" : ""}`}
+              className="flex flex-col items-center justify-center py-5 px-4 rounded-xl"
             >
-              <badge.icon size={28} strokeWidth={1} className="mb-3 text-foreground" />
-              <span className="font-display text-[10px] uppercase tracking-editorial text-foreground text-center">
+              <badge.icon size={24} strokeWidth={1.5} className="mb-2 text-foreground" />
+              <span className="font-body text-[11px] text-muted-foreground text-center">
                 {badge.label}
               </span>
             </div>
