@@ -10,10 +10,10 @@ const TransformationSection = () => {
       <div className="container py-16 lg:py-24">
         <div className="text-center mb-12">
           <p className="font-display text-xs uppercase tracking-editorial text-primary-foreground/60 mb-4">
-            Transformation
+            Vorher & Nachher
           </p>
           <h2 className="font-display text-3xl md:text-4xl font-light tracking-tight-display">
-            Sehen Sie den Unterschied
+            Die Maffran Transformation
           </h2>
         </div>
 
