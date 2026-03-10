@@ -10,10 +10,10 @@ const TransformationSection = () => {
       <div className="container py-16 lg:py-24">
         <div className="text-center mb-12">
           <p className="font-display text-xs uppercase tracking-editorial text-primary-foreground/60 mb-4">
-            Transformation
+            Vorher & Nachher
           </p>
           <h2 className="font-display text-3xl md:text-4xl font-light tracking-tight-display">
-            Sehen Sie den Unterschied
+            Die Maffran Transformation
           </h2>
         </div>
 
@@ -33,8 +33,8 @@ const TransformationSection = () => {
               </div>
             </div>
             {/* Labels */}
-            <div className="absolute bottom-6 left-6 font-display text-xs uppercase tracking-editorial text-primary-foreground/80">Vorher</div>
-            <div className="absolute bottom-6 right-6 font-display text-xs uppercase tracking-editorial text-primary-foreground/80">Nachher</div>
+            <div className="absolute bottom-6 left-6 font-display text-[10px] md:text-xs uppercase tracking-editorial bg-foreground/60 backdrop-blur-sm px-3 py-1.5 text-primary-foreground">Ohne Maffran</div>
+            <div className="absolute bottom-6 right-6 font-display text-[10px] md:text-xs uppercase tracking-editorial bg-foreground/60 backdrop-blur-sm px-3 py-1.5 text-primary-foreground">Mit Maffran</div>
             {/* Invisible range input */}
             <input
               type="range"
