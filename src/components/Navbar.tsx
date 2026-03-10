@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { to: "/", label: "Home" },
   { to: "/produkt", label: "Produkt" },
   { to: "/angebote", label: "Spar-Angebote" },
+  { to: "/kontakt", label: "Kontakt" },
 ];
 
 const Navbar = () => {
@@ -50,7 +51,7 @@ const Navbar = () => {
           >
             <ShoppingBag size={20} />
             {cartCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 bg-foreground text-primary-foreground text-[10px] font-display font-semibold w-4.5 h-4.5 rounded-full flex items-center justify-center min-w-[18px] h-[18px]">
+              <span className="absolute -top-0.5 -right-0.5 bg-foreground text-primary-foreground text-[10px] font-display font-semibold rounded-full flex items-center justify-center min-w-[18px] h-[18px]">
                 {cartCount}
               </span>
             )}
