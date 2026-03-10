@@ -1,30 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Plus } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 
 const UpsellModal = () => {
-  const { items, isOpen: cartOpen } = useCart();
+  const { items, isOpen: cartOpen, addItem } = useCart();
   const [show, setShow] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  const { addItem } = useCart();
 
-  // Show upsell when cart is closed after having items
-  // We use a simpler approach: show when cart closes and has items
-  useState(() => {
-    const interval = setInterval(() => {
-      if (!cartOpen && items.length > 0 && !dismissed && !sessionStorage.getItem("maffran_upsell_shown")) {
-        // Only show after a delay when user might abandon
-        const timer = setTimeout(() => {
-          if (!dismissed) {
-            setShow(true);
-            sessionStorage.setItem("maffran_upsell_shown", "1");
-          }
-        }, 15000);
-        return () => clearTimeout(timer);
-      }
-    }, 5000);
-    return () => clearInterval(interval);
-  });
+  useEffect(() => {
+    if (!cartOpen && items.length > 0 && !dismissed && !sessionStorage.getItem("maffran_upsell_shown")) {
+      const timer = setTimeout(() => {
+        setShow(true);
+        sessionStorage.setItem("maffran_upsell_shown", "1");
+      }, 15000);
+      return () => clearTimeout(timer);
+    }
+  }, [cartOpen, items.length, dismissed]);
 
   const handleAccept = () => {
     addItem({
