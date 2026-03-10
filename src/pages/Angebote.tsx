@@ -72,28 +72,49 @@ const bundles = [
 
 type Bundle = (typeof bundles)[number];
 type ColorOption = (typeof COLOR_OPTIONS)[number];
+type ColorMode = "einheitsfarbe" | "farbmix";
 
 const Angebote = () => {
   const { addItem } = useCart();
   const [selectedBundle, setSelectedBundle] = useState<Bundle | null>(null);
+  const [colorMode, setColorMode] = useState<ColorMode>("einheitsfarbe");
   const [selectedColor, setSelectedColor] = useState<ColorOption>(COLOR_OPTIONS[0]);
+  const [mixColors, setMixColors] = useState<ColorOption[]>([]);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [added, setAdded] = useState(false);
 
   const handleSelectBundle = (bundle: Bundle) => {
     setSelectedBundle(bundle);
+    setColorMode("einheitsfarbe");
     setSelectedColor(COLOR_OPTIONS[0]);
+    setMixColors(Array(bundle.count).fill(COLOR_OPTIONS[0]));
     setSelectedSize(null);
     setAdded(false);
   };
 
+  const handleMixColorChange = (index: number, color: ColorOption) => {
+    setMixColors((prev) => {
+      const next = [...prev];
+      next[index] = color;
+      return next;
+    });
+  };
+
+  const previewColor = colorMode === "einheitsfarbe" ? selectedColor : mixColors[0] ?? COLOR_OPTIONS[0];
+
   const handleAddToCart = () => {
     if (!selectedBundle || !selectedSize) return;
+    const colorLabel =
+      colorMode === "einheitsfarbe"
+        ? selectedColor.label
+        : mixColors.map((c) => c.label).join(", ");
+    const colorHex = colorMode === "einheitsfarbe" ? selectedColor.hex : mixColors[0].hex;
+
     addItem({
-      id: `${selectedBundle.id}-${selectedColor.id}-${selectedSize}`,
+      id: `${selectedBundle.id}-${colorMode}-${colorLabel}-${selectedSize}`,
       name: selectedBundle.name,
-      color: selectedColor.label,
-      colorHex: selectedColor.hex,
+      color: colorLabel,
+      colorHex,
       size: selectedSize,
       quantity: 1,
       price: selectedBundle.price,
@@ -108,7 +129,6 @@ const Angebote = () => {
       <div className="container py-12 lg:py-20">
         <AnimatePresence mode="wait">
           {!selectedBundle ? (
-            /* ── Step 1: Choose Bundle ── */
             <motion.div
               key="bundles"
               initial={{ opacity: 0, y: 20 }}
@@ -150,7 +170,6 @@ const Angebote = () => {
                           {bundle.tag}
                         </span>
                       )}
-
                       <div className="pt-2">
                         <h3 className="font-display text-lg font-semibold text-foreground mb-1">{bundle.name}</h3>
                         <p className="font-body text-sm text-muted-foreground mb-5">{bundle.countLabel}</p>
@@ -182,7 +201,6 @@ const Angebote = () => {
               </div>
             </motion.div>
           ) : (
-            /* ── Step 2: Color & Size ── */
             <motion.div
               key="config"
               initial={{ opacity: 0, y: 20 }}
@@ -203,7 +221,7 @@ const Angebote = () => {
                   Schritt 2 von 2
                 </p>
                 <h2 className="font-display text-2xl md:text-3xl font-semibold tracking-tight-display text-foreground mb-2">
-                  Farbe & Größe wählen
+                  Wählen Sie Ihre Farben & Größe
                 </h2>
                 <p className="font-body text-sm text-muted-foreground">
                   {selectedBundle.name} — {selectedBundle.countLabel} für {selectedBundle.priceLabel}
@@ -215,9 +233,9 @@ const Angebote = () => {
                 <div className="flex items-center justify-center bg-card rounded-2xl p-8 lg:p-12 border border-border">
                   <AnimatePresence mode="wait">
                     <motion.img
-                      key={selectedColor.id}
-                      src={selectedColor.image}
-                      alt={`Maffran — ${selectedColor.label}`}
+                      key={previewColor.id}
+                      src={previewColor.image}
+                      alt={`Maffran — ${previewColor.label}`}
                       className="w-full max-w-sm object-contain"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -229,27 +247,108 @@ const Angebote = () => {
 
                 {/* Selectors */}
                 <div className="flex flex-col justify-center">
-                  {/* Color */}
-                  <div className="mb-8">
+                  {/* Color Mode Toggle */}
+                  <div className="mb-6">
                     <p className="font-body text-xs uppercase tracking-editorial text-muted-foreground mb-3">
-                      Farbauswahl — <span className="text-foreground font-medium">{selectedColor.label}</span>
+                      Wählen Sie Ihre Farben
                     </p>
-                    <div className="flex gap-3">
-                      {COLOR_OPTIONS.map((color) => (
-                        <button
-                          key={color.id}
-                          onClick={() => setSelectedColor(color)}
-                          aria-label={color.label}
-                          className={`w-10 h-10 rounded-full border-2 transition-all duration-200 ${
-                            selectedColor.id === color.id
-                              ? "border-foreground scale-110 ring-2 ring-foreground/20"
-                              : "border-border hover:border-muted-foreground"
-                          }`}
-                          style={{ backgroundColor: color.hex }}
-                        />
-                      ))}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setColorMode("einheitsfarbe")}
+                        className={`flex-1 font-display text-xs font-medium py-3 px-4 rounded-lg border transition-all ${
+                          colorMode === "einheitsfarbe"
+                            ? "border-foreground bg-foreground text-primary-foreground"
+                            : "border-border text-foreground hover:border-foreground/40"
+                        }`}
+                      >
+                        Einheitsfarbe
+                      </button>
+                      <button
+                        onClick={() => setColorMode("farbmix")}
+                        className={`flex-1 font-display text-xs font-medium py-3 px-4 rounded-lg border transition-all ${
+                          colorMode === "farbmix"
+                            ? "border-foreground bg-foreground text-primary-foreground"
+                            : "border-border text-foreground hover:border-foreground/40"
+                        }`}
+                      >
+                        Farbmix
+                      </button>
                     </div>
                   </div>
+
+                  {/* Color Swatches */}
+                  <AnimatePresence mode="wait">
+                    {colorMode === "einheitsfarbe" ? (
+                      <motion.div
+                        key="single"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="mb-8"
+                      >
+                        <p className="font-body text-xs text-muted-foreground mb-3">
+                          Eine Farbe für alle {selectedBundle.count} Stück —{" "}
+                          <span className="text-foreground font-medium">{selectedColor.label}</span>
+                        </p>
+                        <div className="flex gap-3">
+                          {COLOR_OPTIONS.map((color) => (
+                            <button
+                              key={color.id}
+                              onClick={() => setSelectedColor(color)}
+                              aria-label={color.label}
+                              className={`w-10 h-10 rounded-full border-2 transition-all duration-200 ${
+                                selectedColor.id === color.id
+                                  ? "border-foreground scale-110 ring-2 ring-foreground/20"
+                                  : "border-border hover:border-muted-foreground"
+                              }`}
+                              style={{ backgroundColor: color.hex }}
+                            />
+                          ))}
+                        </div>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="mix"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="mb-8"
+                      >
+                        <p className="font-body text-xs text-muted-foreground mb-4">
+                          Wählen Sie für jedes Stück eine Farbe
+                        </p>
+                        <div className="space-y-3">
+                          {Array.from({ length: selectedBundle.count }).map((_, idx) => (
+                            <div key={idx} className="flex items-center gap-3">
+                              <span className="font-display text-xs font-medium text-muted-foreground w-16 shrink-0">
+                                Stück {idx + 1}
+                              </span>
+                              <div className="flex gap-2">
+                                {COLOR_OPTIONS.map((color) => (
+                                  <button
+                                    key={color.id}
+                                    onClick={() => handleMixColorChange(idx, color)}
+                                    aria-label={`${color.label} für Stück ${idx + 1}`}
+                                    className={`w-8 h-8 rounded-full border-2 transition-all duration-200 ${
+                                      mixColors[idx]?.id === color.id
+                                        ? "border-foreground scale-110 ring-2 ring-foreground/20"
+                                        : "border-border hover:border-muted-foreground"
+                                    }`}
+                                    style={{ backgroundColor: color.hex }}
+                                  />
+                                ))}
+                              </div>
+                              <span className="font-body text-[11px] text-muted-foreground hidden sm:inline">
+                                {mixColors[idx]?.label}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   {/* Size */}
                   <div className="mb-8">

@@ -7,6 +7,9 @@ import { CartProvider } from "@/contexts/CartContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
+import UpsellModal from "@/components/UpsellModal";
 import Index from "./pages/Index";
 import Produkt from "./pages/Produkt";
 import Angebote from "./pages/Angebote";
@@ -14,6 +17,9 @@ import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import Widerruf from "./pages/Widerruf";
 import Versand from "./pages/Versand";
+import Retoure from "./pages/Retoure";
+import Tracking from "./pages/Tracking";
+import Kontakt from "./pages/Kontakt";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +33,9 @@ const App = () => (
         <CartProvider>
           <Navbar />
           <CartDrawer />
+          <ExitIntentPopup />
+          <UpsellModal />
+          <WhatsAppButton />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/produkt" element={<Produkt />} />
@@ -35,6 +44,9 @@ const App = () => (
             <Route path="/datenschutz" element={<Datenschutz />} />
             <Route path="/widerruf" element={<Widerruf />} />
             <Route path="/versand" element={<Versand />} />
+            <Route path="/retoure" element={<Retoure />} />
+            <Route path="/tracking" element={<Tracking />} />
+            <Route path="/kontakt" element={<Kontakt />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />

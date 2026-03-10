@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-foreground text-primary-foreground">
       <div className="container py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <span className="font-display text-lg font-semibold tracking-tight-display block mb-3">Maffran</span>
             <p className="font-body text-xs text-primary-foreground/60 leading-relaxed max-w-xs">
@@ -16,6 +16,14 @@ const Footer = () => {
             <nav className="flex flex-col gap-2">
               <Link to="/produkt" className="font-body text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">Produkt</Link>
               <Link to="/angebote" className="font-body text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">Spar-Angebote</Link>
+            </nav>
+          </div>
+          <div>
+            <p className="font-display text-xs uppercase tracking-editorial mb-3 text-primary-foreground/60">Service</p>
+            <nav className="flex flex-col gap-2">
+              <Link to="/kontakt" className="font-body text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">Kontakt</Link>
+              <Link to="/tracking" className="font-body text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">Sendungsverfolgung</Link>
+              <Link to="/retoure" className="font-body text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">Retoure</Link>
             </nav>
           </div>
           <div>
