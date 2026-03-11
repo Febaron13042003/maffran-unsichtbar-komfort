@@ -12,6 +12,7 @@ const HeroSection = () => {
           src={heroProduct}
           alt="Maffran Invisible Seamless Comfort Brief"
           className="w-full h-full object-cover"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/60 to-foreground/20" />
       </div>
