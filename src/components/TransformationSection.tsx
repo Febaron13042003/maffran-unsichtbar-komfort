@@ -21,11 +21,13 @@ const TransformationSection = () => {
           {/* Comparison */}
           <div className="relative w-full aspect-[3/4] overflow-hidden select-none">
             {/* After (bottom layer) */}
-            <img src={afterImage} alt="Mit Maffran — keine sichtbaren Linien" className="absolute inset-0 w-full h-full object-cover" />
+            <img src={afterImage} alt="Mit Maffran — keine sichtbaren Linien" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            
             {/* Before (top layer, clipped) */}
             <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}>
-              <img src={beforeImage} alt="Ohne Maffran — sichtbare Linien" className="w-full h-full object-cover" />
+              <img src={beforeImage} alt="Ohne Maffran — sichtbare Linien" className="w-full h-full object-cover" loading="lazy" />
             </div>
+            
             {/* Slider line */}
             <div className="absolute top-0 bottom-0 w-px bg-primary-foreground/80" style={{ left: `${sliderPos}%` }}>
               <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 border border-primary-foreground/80 flex items-center justify-center font-display text-xs text-primary-foreground/80">
