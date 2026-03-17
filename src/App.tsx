@@ -19,6 +19,7 @@ import Widerruf from "./pages/Widerruf";
 import Versand from "./pages/Versand";
 import Retoure from "./pages/Retoure";
 import Tracking from "./pages/Tracking";
+import Sendungsverfolgung from "./pages/Sendungsverfolgung";
 import Kontakt from "./pages/Kontakt";
 import NotFound from "./pages/NotFound";
 
