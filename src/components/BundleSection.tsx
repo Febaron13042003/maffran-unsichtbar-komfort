@@ -3,30 +3,30 @@ import * as React from "react";
 const bundles = [
   {
     tag: null,
-    name: "Starter Pack",
+    name: "Zum Testen",
+    count: "1 Stück",
+    price: "29,90 €",
+    perUnit: "29,90 € / Stück",
+    highlight: false,
+    link: "#",
+  },
+  {
+    tag: "BESTSELLER",
+    name: "Bestseller",
     count: "3 Stück",
-    price: "34,90 €",
-    perUnit: "11,63 € / Stück",
-    highlight: false,
-    link: "COLE_O_LINK_DA_STRIPE_AQUI_3_UNIDADES",
-  },
-  {
-    tag: "AM BELIEBTESTEN", // Tradução de "Mais Popular" (Gatilho forte na DE)
-    name: "Bestseller Bundle",
-    count: "5 Stück",
-    price: "49,90 €",
-    perUnit: "9,98 € / Stück",
+    price: "54,90 €",
+    perUnit: "18,30 € / Stück",
     highlight: true,
-    link: "COLE_O_LINK_DA_STRIPE_AQUI_5_UNIDADES",
+    link: "#",
   },
   {
-    tag: "BESTER WERT", // Tradução de "Best Value"
-    name: "Max Value Pack",
-    count: "7 Stück",
-    price: "59,90 €",
-    perUnit: "8,55 € / Stück",
+    tag: "BESTER WERT",
+    name: "Premium Pack",
+    count: "5 Stück",
+    price: "69,90 €",
+    perUnit: "13,98 € / Stück",
     highlight: false,
-    link: "COLE_O_LINK_DA_STRIPE_AQUI_7_UNIDADES",
+    link: "#",
   },
 ];
 

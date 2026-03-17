@@ -47,6 +47,7 @@ const App = () => (
             <Route path="/versand" element={<Versand />} />
             <Route path="/retoure" element={<Retoure />} />
             <Route path="/tracking" element={<Tracking />} />
+            <Route path="/sendungsverfolgung" element={<Sendungsverfolgung />} />
             <Route path="/kontakt" element={<Kontakt />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
