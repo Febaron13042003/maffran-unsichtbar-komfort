@@ -1,10 +1,10 @@
-import { Lock, CreditCard, Globe, ShieldCheck } from "lucide-react";
+import { Lock, CreditCard, Globe, Apple } from "lucide-react";
 
 const badges = [
-  { icon: CreditCard, label: "PayPal" },
-  { icon: ShieldCheck, label: "Klarna" },
+  { icon: CreditCard, label: "Kreditkarten & PayPal" },
+  { icon: Apple, label: "Apple Pay" },
   { icon: Lock, label: "SSL Secure" },
-  { icon: Globe, label: "Express Versand · 7–15 Tage" },
+  { icon: Globe, label: "Express Versand · 7–15 Werktage" },
 ];
 
 const TrustSection = () => {

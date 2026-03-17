@@ -22,7 +22,7 @@ const Footer = () => {
             <p className="font-display text-xs uppercase tracking-editorial mb-3 text-primary-foreground/60">Service</p>
             <nav className="flex flex-col gap-2">
               <Link to="/kontakt" className="font-body text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">Kontakt</Link>
-              <Link to="/tracking" className="font-body text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">Sendungsverfolgung</Link>
+              <Link to="/sendungsverfolgung" className="font-body text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">Sendungsverfolgung</Link>
               <Link to="/retoure" className="font-body text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors">Retoure</Link>
             </nav>
           </div>
