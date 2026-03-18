@@ -27,6 +27,7 @@ const UpsellModal = () => {
       quantity: 1,
       price: 7,
       bundleLabel: "Extra Paar (+1)",
+      bundleKey: "1-stueck",
     });
     setShow(false);
     setDismissed(true);

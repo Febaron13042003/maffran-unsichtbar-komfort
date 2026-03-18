@@ -110,6 +110,12 @@ const Angebote = () => {
         : mixColors.map((c) => c.label).join(", ");
     const colorHex = colorMode === "einheitsfarbe" ? selectedColor.hex : mixColors[0].hex;
 
+    const bundleKeyMap: Record<string, string> = {
+      single: "1-stueck",
+      bestseller: "3-stueck",
+      premium: "5-stueck",
+    };
+
     addItem({
       id: `${selectedBundle.id}-${colorMode}-${colorLabel}-${selectedSize}`,
       name: selectedBundle.name,
@@ -119,6 +125,7 @@ const Angebote = () => {
       quantity: 1,
       price: selectedBundle.price,
       bundleLabel: `${selectedBundle.name} (${selectedBundle.countLabel})`,
+      bundleKey: bundleKeyMap[selectedBundle.id] || "1-stueck",
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);

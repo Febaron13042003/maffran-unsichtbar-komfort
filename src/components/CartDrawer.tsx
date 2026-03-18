@@ -1,9 +1,42 @@
+import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
-import { Trash2, Lock, ShieldCheck } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Trash2, Lock, ShieldCheck, Loader2 } from "lucide-react";
 
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeItem, total } = useCart();
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    if (items.length === 0) return;
+    setLoading(true);
+    try {
+      const payload = {
+        items: items.map((item) => ({
+          bundleKey: item.bundleKey,
+          bundleLabel: item.bundleLabel,
+          color: item.color,
+          size: item.size,
+          quantity: item.quantity,
+        })),
+        origin: window.location.origin,
+      };
+
+      const { data, error } = await supabase.functions.invoke("create-checkout", {
+        body: payload,
+      });
+
+      if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -56,8 +89,12 @@ const CartDrawer = () => {
               </span>
             </div>
 
-            <button className="w-full bg-foreground text-primary-foreground font-display text-sm font-medium py-4 rounded-lg hover:opacity-90 transition-opacity">
-              Zur Kasse
+            <button
+              onClick={handleCheckout}
+              disabled={loading}
+              className="w-full bg-foreground text-primary-foreground font-display text-sm font-medium py-4 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {loading ? <><Loader2 size={16} className="animate-spin" /> Wird geladen...</> : "Zur Kasse"}
             </button>
 
             <div className="flex items-center justify-center gap-4 py-2">
@@ -67,11 +104,11 @@ const CartDrawer = () => {
               </div>
               <div className="flex items-center gap-1.5 text-muted-foreground">
                 <ShieldCheck size={14} />
-                <span className="font-body text-[11px]">PayPal & Klarna</span>
+                <span className="font-body text-[11px]">PayPal</span>
               </div>
             </div>
             <p className="text-center font-body text-[11px] text-muted-foreground">
-              Sicherer Checkout mit PayPal & Klarna
+              Sicherer Checkout mit SSL & PayPal
             </p>
           </div>
         )}
