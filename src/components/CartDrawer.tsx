@@ -104,7 +104,7 @@ const CartDrawer = () => {
               </div>
               <div className="flex items-center gap-1.5 text-muted-foreground">
                 <ShieldCheck size={14} />
-                <span className="font-body text-[11px]">PayPal & Klarna</span>
+                <span className="font-body text-[11px]">PayPal</span>
               </div>
             </div>
             <p className="text-center font-body text-[11px] text-muted-foreground">
