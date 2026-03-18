@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
-import { Trash2, Lock, ShieldCheck } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Trash2, Lock, ShieldCheck, Loader2 } from "lucide-react";
 
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeItem, total } = useCart();
