@@ -6,6 +6,37 @@ import { Trash2, Lock, ShieldCheck, Loader2 } from "lucide-react";
 
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeItem, total } = useCart();
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    if (items.length === 0) return;
+    setLoading(true);
+    try {
+      const payload = {
+        items: items.map((item) => ({
+          bundleKey: item.bundleKey,
+          bundleLabel: item.bundleLabel,
+          color: item.color,
+          size: item.size,
+          quantity: item.quantity,
+        })),
+        origin: window.location.origin,
+      };
+
+      const { data, error } = await supabase.functions.invoke("create-checkout", {
+        body: payload,
+      });
+
+      if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
