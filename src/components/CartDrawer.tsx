@@ -89,8 +89,12 @@ const CartDrawer = () => {
               </span>
             </div>
 
-            <button className="w-full bg-foreground text-primary-foreground font-display text-sm font-medium py-4 rounded-lg hover:opacity-90 transition-opacity">
-              Zur Kasse
+            <button
+              onClick={handleCheckout}
+              disabled={loading}
+              className="w-full bg-foreground text-primary-foreground font-display text-sm font-medium py-4 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {loading ? <><Loader2 size={16} className="animate-spin" /> Wird geladen...</> : "Zur Kasse"}
             </button>
 
             <div className="flex items-center justify-center gap-4 py-2">
