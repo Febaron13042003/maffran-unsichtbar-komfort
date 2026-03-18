@@ -108,7 +108,7 @@ const CartDrawer = () => {
               </div>
             </div>
             <p className="text-center font-body text-[11px] text-muted-foreground">
-              Sicherer Checkout mit PayPal & Klarna
+              Sicherer Checkout mit SSL & PayPal
             </p>
           </div>
         )}

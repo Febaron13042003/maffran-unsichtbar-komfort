@@ -9,6 +9,7 @@ export interface CartItem {
   quantity: number;
   price: number;
   bundleLabel: string;
+  bundleKey: string;
 }
 
 interface CartContextType {
