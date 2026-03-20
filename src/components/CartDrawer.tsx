@@ -1,33 +1,32 @@
 import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
-import { supabase } from "@/integrations/supabase/client";
 import { Trash2, Lock, ShieldCheck, Loader2 } from "lucide-react";
-
+ 
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeItem, total } = useCart();
   const [loading, setLoading] = useState(false);
-
+ 
   const handleCheckout = async () => {
     if (items.length === 0) return;
     setLoading(true);
     try {
-      const payload = {
-        items: items.map((item) => ({
-          bundleKey: item.bundleKey,
-          bundleLabel: item.bundleLabel,
-          color: item.color,
-          size: item.size,
-          quantity: item.quantity,
-        })),
-        origin: window.location.origin,
-      };
-
-      const { data, error } = await supabase.functions.invoke("create-checkout", {
-        body: payload,
+      const response = await fetch("/.netlify/functions/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({
+            bundleKey: item.bundleKey,
+            bundleLabel: item.bundleLabel,
+            color: item.color,
+            size: item.size,
+            quantity: item.quantity,
+          })),
+          origin: window.location.origin,
+        }),
       });
-
-      if (error) throw error;
+ 
+      const data = await response.json();
       if (data?.url) {
         window.location.href = data.url;
       }
@@ -37,7 +36,7 @@ const CartDrawer = () => {
       setLoading(false);
     }
   };
-
+ 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetContent className="w-full sm:max-w-md flex flex-col bg-background">
@@ -46,7 +45,7 @@ const CartDrawer = () => {
             Warenkorb
           </SheetTitle>
         </SheetHeader>
-
+ 
         <div className="flex-1 overflow-y-auto py-4 space-y-4">
           {items.length === 0 ? (
             <p className="text-center text-muted-foreground font-body text-sm py-12">
@@ -79,7 +78,7 @@ const CartDrawer = () => {
             ))
           )}
         </div>
-
+ 
         {items.length > 0 && (
           <div className="border-t border-border pt-4 space-y-4">
             <div className="flex justify-between items-center">
@@ -88,7 +87,7 @@ const CartDrawer = () => {
                 {total.toFixed(2).replace(".", ",")} €
               </span>
             </div>
-
+ 
             <button
               onClick={handleCheckout}
               disabled={loading}
@@ -96,7 +95,7 @@ const CartDrawer = () => {
             >
               {loading ? <><Loader2 size={16} className="animate-spin" /> Wird geladen...</> : "Zur Kasse"}
             </button>
-
+ 
             <div className="flex items-center justify-center gap-4 py-2">
               <div className="flex items-center gap-1.5 text-muted-foreground">
                 <Lock size={14} />
@@ -116,5 +115,5 @@ const CartDrawer = () => {
     </Sheet>
   );
 };
-
+ 
 export default CartDrawer;
